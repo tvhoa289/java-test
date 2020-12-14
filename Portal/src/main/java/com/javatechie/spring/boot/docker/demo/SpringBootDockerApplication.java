@@ -11,7 +11,7 @@ public class SpringBootDockerApplication {
 
 	@GetMapping("/load-data")
 	public String getMessage() {
-		return "This is load data report page";
+		return "This is load data report update1 page";
 	}
 
 	public static void main(String[] args) {

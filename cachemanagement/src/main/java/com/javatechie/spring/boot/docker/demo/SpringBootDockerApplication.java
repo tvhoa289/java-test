@@ -11,7 +11,7 @@ public class SpringBootDockerApplication {
 
 	@GetMapping("/transform-data-report")
 	public String getMessage() {
-		return "This is transform data report";
+		return "This is transform data report update 2 PAGE";
 	}
 
 	public static void main(String[] args) {
