@@ -11,7 +11,7 @@ public class SpringBootDockerApplication {
 
 	@GetMapping("/notification")
 	public String getMessage() {
-		return "This is Notification update1 PAGE";
+		return "This is Notification update2 PAGE";
 	}
 
 	public static void main(String[] args) {
