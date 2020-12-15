@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SpringBootDockerApplication {
 
-	@GetMapping("/authentication")
+	@GetMapping("/Authentication")
 	public String getMessage() {
 		return "This is Authentication update2 PAGE";
 	}
