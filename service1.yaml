@@ -108,7 +108,7 @@ Resources:
   # Create a rule on the load balancer for routing traffic to the target group
 
 
-  LoadBalancerRule:
+  LoadBalancerRuleApp:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       Actions:
@@ -131,7 +131,7 @@ Resources:
       Protocol: HTTP
       VpcId: !Ref 'VPC'
         
-  TaskDefinition:
+  TaskDefinitionApp:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: !Ref Family
@@ -148,7 +148,7 @@ Resources:
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
 
-  Service:
+  ServiceApp:
     Type: AWS::ECS::Service
     Properties:
       ServiceName: !Ref 'ServiceName'
@@ -165,7 +165,7 @@ Resources:
               "SecurityGroups" : [ !Ref SecurityGroupsECS ],
               "Subnets" : [ !Ref SubnetPublic1 , !Ref SubnetPublic2 ]
           }
-      TaskDefinition: !Ref 'TaskDefinition'
+      TaskDefinition: !Ref 'TaskDefinitionApp'
       LoadBalancers:
         - ContainerName: !Ref 'ContainerName'
           ContainerPort: !Ref ContainerPort
@@ -175,6 +175,6 @@ Resources:
 Outputs:
   Service:
     Description: The name of the ECS Service
-    Value: !Ref 'Service'
+    Value: !Ref 'ServiceApp'
     Export:
       Name: !Join [ ':', [ 'ECS', 'Service' ] ]
