@@ -1,0 +1,176 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy a service on AWS Fargate, hosted in a public subnet, and accessible via a public load balancer.
+Parameters:
+  StackName:
+    Type: String
+    Default: StackName
+    Description: The name of the parent Fargate networking stack that you created. Necessary
+                 to locate and reference resources created by that stack.
+  ClusterName:
+    Type: String
+    Default: Lease_Self-Service_Portal-v5
+    Description: A name for the Cluster
+
+  ServiceName:
+    Type: String
+    Default: Test
+    Description: A name for the service
+  ImageUrl:
+    Type: String
+    Default: docker.io/tvhoa289/spring-boot-tranform-p8081
+    Description: The url of a docker image that contains the application process that
+                 will handle the traffic for this service
+  ContainerPort:
+    Type: Number
+    Default: 8080
+    Description: What port number the application inside the docker container is binding to
+  ContainerCpu:
+    Type: Number
+    Default: 128
+    Description: How much CPU to give the container. 1024 is 1 CPU
+  ContainerMemory:
+    Type: Number
+    Default: 512
+    Description: How much memory in megabytes to give the container
+
+  Path:
+    Type: String
+    Default: "/"
+    Description: A path on the public load balancer that this service
+                 should be connected to. Use * to send all load balancer
+                 traffic to this service.
+  Priority:
+    Type: Number
+    Default: 2
+    Description: The priority for the routing rule added to the load balancer.
+                 This only applies if your have multiple services which have been
+                 assigned to different paths on the load balancer.
+  DesiredCount:
+    Type: Number
+    Default: 1
+    Description: How many copies of the service task to run
+
+  SecurityGroupsECS:
+    Type: String
+    Default: sg-0066aceebf0905153
+    Description: SecurityGroup for ECS 
+  
+  VPC:
+    Type: String
+    Default: vpc-09c7d97bd396e9751
+    Description: VPC
+  Family:
+    Type: String
+    Default: service1
+    Description: Family group for TaskDefinition1
+
+  TargetGroupName:
+    Type: String
+    Default: service1
+    Description: Name for targetgroup
+
+  Loadbalancer:
+    Type: String
+    Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:loadbalancer/app/vpc-PublicL-35BOR4Q76SHT/66903f47683c7e1c
+    Description: How many copies of the service task to run
+  Role:
+    Type: String
+    Default: ""
+    Description: (Optional) An IAM role to give the service's containers if the code within needs to
+                 access other AWS resources like S3 buckets, DynamoDB tables, etc
+Mapping:
+  PortMappings:
+    Containerport1: 8080
+  Subnet:
+    SubnetPublic1: subnet-038baec42000456e1	
+    SubnetPublic2: subnet-0dcd1b00ea689407f	
+    SubnetPrivate1: #id3
+    SubnetPrivate2: #id4
+  
+
+Conditions:
+  HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
+
+Resources:
+
+  # Create a rule on the load balancer for routing traffic to the target group
+  PublicLoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - TargetGroupArn: !Ref 'TargetGroup'
+          Type: 'forward'
+      LoadBalancerArn: !Ref 'Loadbalancer'
+      Port: 443
+      Protocol: HTTP
+
+  LoadBalancerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions:
+        - TargetGroupArn: !Ref 'TargetGroup'
+          Type: 'forward'
+      Conditions:
+        - Field: path-pattern
+          Values: [!Ref 'Path']
+      ListenerArn: !Ref PublicLoadBalancerListener
+      Priority: !Ref 'Priority'
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckPath: !Ref 'Path'
+      HealthCheckProtocol: HTTP
+      TargetType: ip
+      Name: !Ref 'TargetGroupName'
+      Port: !Ref 'ContainerPort'
+      Protocol: HTTP
+      VpcId: !Ref 'VPC'
+        
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: !Ref Family
+      Cpu: !Ref 'ContainerCpu'
+      Memory: !Ref 'ContainerMemory'
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      ContainerDefinitions:
+        - Name: !Ref 'ContainerName'
+          Cpu: !Ref 'ContainerCpu'
+          Memory: !Ref 'ContainerMemory'
+          Image: !Ref 'ImageUrl'
+          PortMappings:
+            - ContainerPort: !Ref 'ContainerPort'
+
+  Service:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: !Ref 'ServiceName'
+      Cluster: !Ref 'ClusterName'
+      LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 75
+      DesiredCount: !Ref 'DesiredCount'
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups: !Ref 'SecurityGroupsECS'
+          Subnets:
+            - !FindInMap ['Subnet', 'SubnetPublic1']
+            - !FindInMap ['Subnet', 'SubnetPublic2']
+      TaskDefinition: !Ref 'TaskDefinition'
+      LoadBalancers:
+        - ContainerName: !Ref 'ContainerName'
+          ContainerPort: !Ref 'ContainerPort'
+          TargetGroupArn: !Ref 'TargetGroup'
+
+
+Outputs:
+  Service:
+    Description: The name of the ECS Service
+    Value: !Ref 'Service'
+    Export:
+      Name: !Join [ ':', [ 'ECS', 'Service' ] ]
