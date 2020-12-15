@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo '${params.Choice_ServiceName}'
+echo ${params.Choice_ServiceName}
