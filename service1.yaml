@@ -20,6 +20,10 @@ Parameters:
     Default: docker.io/tvhoa289/spring-boot-tranform-p8081
     Description: The url of a docker image that contains the application process that
                  will handle the traffic for this service
+  ContainerName:
+    Type: String
+    Default: abc
+    Description: What port number the application inside the docker container is binding to
   ContainerPort:
     Type: Number
     Default: 8080
