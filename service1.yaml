@@ -56,7 +56,7 @@ Parameters:
 
   SecurityGroupsECS:
     Type: String
-    Default: vpc-FargateContainerSecurityGroup-A1OZTCPABTUG
+    Default: 'sg-0066aceebf0905153'
     Description: SecurityGroup for ECS 
   
   VPC:
