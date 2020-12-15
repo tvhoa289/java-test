@@ -162,18 +162,18 @@ Resources:
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 75
-      DesiredCount: !Ref 'DesiredCount'
+      DesiredCount: !Ref DesiredCount
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
           SecurityGroups: !Ref 'SecurityGroupsECS'
           Subnets:
-            - !Ref SubnetPublic1
-            - !Ref SubnetPublic2
+            - !Ref 'SubnetPublic1'
+            - !Ref 'SubnetPublic2'
       TaskDefinition: !Ref 'TaskDefinition'
       LoadBalancers:
         - ContainerName: !Ref 'ContainerName'
-          ContainerPort: !Ref 'ContainerPort'
+          ContainerPort: !Ref ContainerPort
           TargetGroupArn: !Ref 'TargetGroup'
 
 
