@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SpringBootDockerApplication {
 
-	@GetMapping("/notification")
+	@GetMapping("/document_upload")
 	public String getMessage() {
 		return "This is Notification update2 PAGE";
 	}
