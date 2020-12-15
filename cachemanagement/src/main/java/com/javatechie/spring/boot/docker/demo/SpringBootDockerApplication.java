@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SpringBootDockerApplication {
 
-	@GetMapping("/transform-data-report")
+	@GetMapping("/cache_management")
 	public String getMessage() {
 		return "This is transform data report update 2 PAGE";
 	}
