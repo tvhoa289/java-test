@@ -79,8 +79,6 @@ Parameters:
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
 Mappings:
-  PortMappings:
-    Containerport1: 8080
   Subnet:
     SubnetPublic1: subnet-038baec42000456e1	
     SubnetPublic2: subnet-0dcd1b00ea689407f	
