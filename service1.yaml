@@ -177,4 +177,4 @@ Outputs:
     Description: The name of the ECS Service
     Value: !Ref 'ServiceApp'
     Export:
-      Name: !Join [ ':', [ 'ECS', 'Service' ] ]
+      Name: !Join [ ':', [ 'ECS', 'ServiceApp' ] ]
