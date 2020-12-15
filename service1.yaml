@@ -165,11 +165,11 @@ Resources:
       DesiredCount: !Ref DesiredCount
       NetworkConfiguration:
         AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
-          SecurityGroups: !Ref 'SecurityGroupsECS'
-          Subnets:
-            - !Ref 'SubnetPublic1'
-            - !Ref 'SubnetPublic2'
+          {
+              "AssignPublicIp" : ENABLE,
+              "SecurityGroups" : [ !Ref SecurityGroupsECS ],
+              "Subnets" : [ !Ref SubnetPublic1 , !Ref SubnetPublic2 ]
+          }
       TaskDefinition: !Ref 'TaskDefinition'
       LoadBalancers:
         - ContainerName: !Ref 'ContainerName'
