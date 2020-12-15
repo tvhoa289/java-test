@@ -171,10 +171,3 @@ Resources:
           ContainerPort: !Ref ContainerPort
           TargetGroupArn: !Ref 'TargetGroupApp'
 
-
-Outputs:
-  Service:
-    Description: The name of the ECS Service
-    Value: !Ref 'ServiceApp'
-    Export:
-      Name: !Join [ ':', [ 'ECS', 'ServiceApp' ] ]
