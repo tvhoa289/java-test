@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo '$Choice_ServiceName'
+echo "${Choice_ServiceName}"
