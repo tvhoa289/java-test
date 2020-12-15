@@ -1,4 +1,4 @@
 #!/bin/bash
 
-aws ecs register-task-definition --family ${Family_reference} --container-definitions "[{\"name\":\"${Choice_ServiceName}\",\"image\":\"${Image_Url_reference}\",\"cpu\":${Choice_CPU},\"memory\":${Choice_Memory},\"portMappings\":[{\"hostPort\":${Port_Reference},\"protocol\":\"tcp\",\"containerPort\":${Port_Reference}}],\"essential\":true}]" --cpu ${Choice_CPU} --memory ${Choice_Memory} --requires-compatibilities FARGATE --network-mode awsvpc --region eu-central-1
+aws ecs register-task-definition --family ${Family_reference} --container-definitions "[{\"name\":\"${Choice_ServiceName}\",\"image\":\"${Image_Url_reference}:$BUILD_NUMBER\",\"cpu\":${Choice_CPU},\"memory\":${Choice_Memory},\"portMappings\":[{\"hostPort\":${Port_Reference},\"protocol\":\"tcp\",\"containerPort\":${Port_Reference}}],\"essential\":true}]" --cpu ${Choice_CPU} --memory ${Choice_Memory} --requires-compatibilities FARGATE --network-mode awsvpc --region eu-central-1
 aws ecs update-service --cluster ${ClusterName} --service ${Choice_ServiceName} --task-definition ${Choice_ServiceName} --region eu-central-1 
