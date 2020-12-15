@@ -56,12 +56,12 @@ Parameters:
 
   SecurityGroupsECS:
     Type: String
-    Default: 'sg-0066aceebf0905153'
+    Default: sg-09813e0ad3c1b3299
     Description: SecurityGroup for ECS 
   
   VPC:
     Type: String
-    Default: vpc-09c7d97bd396e9751
+    Default: vpc-0b22c704eb420aa15
     Description: VPC
   Family:
     Type: String
@@ -85,17 +85,20 @@ Parameters:
 
   SubnetPublic1:
     Type: String
-    Default: subnet-038baec42000456e1
+    Default: subnet-02142c53f9903895d
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
 
   SubnetPublic2:
     Type: String
-    Default: subnet-0dcd1b00ea689407f
+    Default: subnet-0eb6fbd0c4ad79fe4
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
   
-  
+  PublicLoadBalancerListener:
+    Type: String
+    Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/vpc-PublicL-1F0DSFAH0CA5I/b3bc35038c1b7d15/11a1ab347412b8f3	
+    Description: Listener for forward traffic
 
 Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
@@ -103,21 +106,13 @@ Conditions:
 Resources:
 
   # Create a rule on the load balancer for routing traffic to the target group
-  PublicLoadBalancerListener:
-    Type: AWS::ElasticLoadBalancingV2::Listener
-    Properties:
-      DefaultActions:
-        - TargetGroupArn: !Ref 'TargetGroup'
-          Type: 'forward'
-      LoadBalancerArn: !Ref 'Loadbalancer'
-      Port: 443
-      Protocol: HTTP
+
 
   LoadBalancerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       Actions:
-        - TargetGroupArn: !Ref 'TargetGroup'
+        - TargetGroupArn: !Ref 'TargetGroupApp'
           Type: 'forward'
       Conditions:
         - Field: path-pattern
@@ -125,7 +120,7 @@ Resources:
       ListenerArn: !Ref PublicLoadBalancerListener
       Priority: !Ref 'Priority'
 
-  TargetGroup:
+  TargetGroupApp:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckPath: !Ref 'Path'
@@ -174,7 +169,7 @@ Resources:
       LoadBalancers:
         - ContainerName: !Ref 'ContainerName'
           ContainerPort: !Ref ContainerPort
-          TargetGroupArn: !Ref 'TargetGroup'
+          TargetGroupArn: !Ref 'TargetGroupApp'
 
 
 Outputs:
