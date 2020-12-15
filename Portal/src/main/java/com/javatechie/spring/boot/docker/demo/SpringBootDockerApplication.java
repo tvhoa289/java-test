@@ -11,7 +11,7 @@ public class SpringBootDockerApplication {
 
 	@GetMapping("/portal")
 	public String getMessage() {
-		return "This is load data report update1 page";
+		return "This is portal PAGE";
 	}
 
 	public static void main(String[] args) {
