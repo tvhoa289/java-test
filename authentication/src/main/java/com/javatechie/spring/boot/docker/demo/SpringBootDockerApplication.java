@@ -11,7 +11,7 @@ public class SpringBootDockerApplication {
 
 	@GetMapping("/Authentication")
 	public String getMessage() {
-		return "This is Authentication update2 PAGE";
+		return "This is Authentication update PAGE";
 	}
 
 	public static void main(String[] args) {
