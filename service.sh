@@ -1,3 +1,3 @@
-#!/bin/sh
+#!/bin/bash
 
-echo ${params.Choice_ServiceName}
+echo '$Choice_ServiceName'
