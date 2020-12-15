@@ -1,4 +1,4 @@
 #!/bin/bash
 
 echo "${Choice_ServiceName}"
-aws cloudformation create-stack --stack-name ${Choice_ServiceName} --template-body file://service1.yaml --parameters ServiceName=${Choice_ServiceName} ContainerCpu=${Choice_CPU} ContainerMemory=${Choice_Memory} ContainerPort="${Port_Reference}" Family=${Family_reference} TargetGroupName=${Targetgroup_Name} Path=${Path_healcheck} ImageUrl=${Image_Url_reference}
+aws cloudformation create-stack --stack-name ${Choice_ServiceName} --template-body file://service1.yaml --parameters ParameterKey=ServiceName,ParameterValue=${Choice_ServiceName} ParameterKey=ContainerCpu,ParameterValue=${Choice_CPU} ParameterKey=ContainerMemory,ParameterValue=${Choice_Memory} ParameterKey=ContainerPort,ParameterValue=${Port_Reference} ParameterKey=Family,ParameterValue=${Family_reference} ParameterKey=TargetGroupName,ParameterValue=${Targetgroup_Name} ParameterKey=Path,ParameterValue=${Path_healcheck} ParameterKey=ImageUrl,ParameterValue=${Image_Url_reference}
