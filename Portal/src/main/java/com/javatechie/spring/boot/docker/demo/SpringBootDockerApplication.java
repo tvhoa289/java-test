@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SpringBootDockerApplication {
 
-	@GetMapping("/load-data")
+	@GetMapping("/Portal")
 	public String getMessage() {
 		return "This is load data report update1 page";
 	}
