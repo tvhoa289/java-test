@@ -166,7 +166,7 @@ Resources:
       NetworkConfiguration:
         AwsvpcConfiguration:
           {
-              "AssignPublicIp" : ENABLE,
+              "AssignPublicIp" : ENABLED,
               "SecurityGroups" : [ !Ref SecurityGroupsECS ],
               "Subnets" : [ !Ref SubnetPublic1 , !Ref SubnetPublic2 ]
           }
