@@ -78,14 +78,14 @@ Parameters:
     Default: ""
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
-                 
-  SubnetPublic1: 	
+
+  SubnetPublic1:
     Type: String
     Default: subnet-038baec42000456e1
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
 
-  SubnetPublic2: 	
+  SubnetPublic2:
     Type: String
     Default: subnet-0dcd1b00ea689407f
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
