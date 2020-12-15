@@ -11,7 +11,7 @@ public class SpringBootDockerApplication {
 
 	@GetMapping("/cache_management")
 	public String getMessage() {
-		return "This is transform data report update 2 PAGE";
+		return "This is cache management PAGE";
 	}
 
 	public static void main(String[] args) {
