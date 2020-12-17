@@ -147,6 +147,12 @@ Resources:
           Image: !Ref 'ImageUrl'
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref ServiceName
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: 'ecs'
 
   ServiceApp:
     Type: AWS::ECS::Service
