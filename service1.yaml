@@ -100,7 +100,10 @@ Parameters:
     Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/lssp-Public-1MVV61GKJVST8/83b67281f7ac7aad/cf10eda9d992c45a
     Description: Listener for forward traffic
 
-  ExecutionRoleArn: arn:aws:iam::810733428226:role/lssp-ECSTaskExecutionRole-LDBF9LZ7E9F1
+  ExecutionRoleArn:
+    Type: String
+    Default: arn:aws:iam::810733428226:role/lssp-ECSTaskExecutionRole-LDBF9LZ7E9F1
+    Description: Role for container push log.
 Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
 
@@ -153,7 +156,7 @@ Resources:
             LogDriver: awslogs
             Options:
               awslogs-group: !Ref 'ServiceName'
-              awslogs-region: !Ref 'AWS::Region'
+              awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: 'ecs'
 
   ServiceApp:
