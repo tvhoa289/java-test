@@ -196,7 +196,7 @@ Resources:
             - !Ref 'ClusterName'
             - !Ref 'ServiceName'
       MinCapacity: 1
-      MaxCapacity: 3
+      MaxCapacity: 4
       RoleARN: !Ref AutoscalingRole
 
   ScaleDownPolicy:
@@ -221,7 +221,7 @@ Resources:
       StepScalingPolicyConfiguration:
         AdjustmentType: 'ChangeInCapacity'
         StepAdjustments:
-          - MetricIntervalUpperBound: -30
+          - MetricIntervalUpperBound: 0
             ScalingAdjustment: -1
         MetricAggregationType: 'Average'
         Cooldown: 60
@@ -248,8 +248,15 @@ Resources:
       StepScalingPolicyConfiguration:
         AdjustmentType: 'ChangeInCapacity'
         StepAdjustments:
-          - MetricIntervalUpperBound: 60
+          - MetricIntervalLowerBound: 0
+            MetricIntervalUpperBound: 15
             ScalingAdjustment: 1
+          - MetricIntervalLowerBound: 15
+            MetricIntervalUpperBound: 25
+            ScalingAdjustment: 2
+          - MetricIntervalLowerBound: 25
+            ScalingAdjustment: 3
+          
         MetricAggregationType: 'Average'
         Cooldown: 60
 
@@ -280,7 +287,7 @@ Resources:
       Statistic: Average
       Period: 60
       EvaluationPeriods: 1
-      Threshold: 50
+      Threshold: 20
       ComparisonOperator: LessThanThreshold
       AlarmActions:
         - !Ref ScaleDownPolicy
@@ -311,7 +318,7 @@ Resources:
       Statistic: Average
       Period: 60
       EvaluationPeriods: 1
-      Threshold: 60
+      Threshold: 70
       ComparisonOperator: GreaterThanThreshold
       AlarmActions:
         - !Ref ScaleUpPolicy
