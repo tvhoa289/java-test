@@ -93,7 +93,7 @@ Parameters:
 
   AutoscalingRole:
     Type: String
-    Default: lssp-AutoscalingRole-SOFO1H0VFG4H
+    Default: arn:aws:iam::810733428226:role/lssp-AutoscalingRole-SOFO1H0VFG4H
     Description: Listener for forward traffic
 
   ExecutionRoleArn:
