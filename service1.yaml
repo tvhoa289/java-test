@@ -281,7 +281,7 @@ Resources:
       Period: 60
       EvaluationPeriods: 1
       Threshold: 50
-      ComparisonOperator: LessThan
+      ComparisonOperator: LessThanThreshold
       AlarmActions:
         - !Ref ScaleDownPolicy
 
@@ -309,10 +309,10 @@ Resources:
         - Name: ClusterName
           Value: !Ref 'ClusterName'
       Statistic: Average
-      Period: 30
+      Period: 60
       EvaluationPeriods: 1
       Threshold: 60
-      ComparisonOperator: GreaterThan
+      ComparisonOperator: GreaterThanThreshold
       AlarmActions:
         - !Ref ScaleUpPolicy
 
