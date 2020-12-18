@@ -281,7 +281,7 @@ Resources:
       Period: 60
       EvaluationPeriods: 1
       Threshold: 50
-      ComparisonOperator: LessThanOrEqualToThreshold
+      ComparisonOperator: LessThan
       AlarmActions:
         - !Ref ScaleDownPolicy
 
@@ -312,7 +312,7 @@ Resources:
       Period: 30
       EvaluationPeriods: 1
       Threshold: 60
-      ComparisonOperator: GreaterThanOrEqualToThreshold
+      ComparisonOperator: GreaterThan
       AlarmActions:
         - !Ref ScaleUpPolicy
 
