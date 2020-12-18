@@ -111,6 +111,10 @@ Resources:
 
   # Create a rule on the load balancer for routing traffic to the target group
 
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Join ['', [/ecs/, !Ref ServiceName, TaskDefinition]]
 
   LoadBalancerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
@@ -141,6 +145,7 @@ Resources:
       Family: !Ref Family
       Cpu: !Ref 'ContainerCpu'
       Memory: !Ref 'ContainerMemory'
+      ExecutionRoleArn: !Ref 'ExecutionRoleArn'
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - FARGATE
@@ -151,12 +156,13 @@ Resources:
           Image: !Ref 'ImageUrl'
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
-      LogConfiguration:
-        LogDriver: awslogs
-        Options:
-          awslogs-group: !Ref 'ServiceName'
-          awslogs-region: !Ref AWS::Region
-          awslogs-stream-prefix: 'ecs'
+          # Enable push logs
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Ref AWS::Region
+              awslogs-group: !Ref LogGroup
+              awslogs-stream-prefix: 'ecs'
 
   Service:
     Type: AWS::ECS::Service
