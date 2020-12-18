@@ -199,7 +199,7 @@ Resources:
       MaxCapacity: 3
       RoleARN: !Ref AutoscalingRole
 
-    ScaleDownPolicy:
+  ScaleDownPolicy:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     DependsOn: ScalableTarget
     Properties:
