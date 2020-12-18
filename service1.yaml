@@ -61,7 +61,7 @@ Parameters:
   
   VPC:
     Type: String
-    Default: 	vpc-0da97bc6505027b59
+    Default: vpc-0da97bc6505027b59
     Description: VPC
   Family:
     Type: String
