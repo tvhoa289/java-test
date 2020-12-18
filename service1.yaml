@@ -56,12 +56,12 @@ Parameters:
 
   SecurityGroupsECS:
     Type: String
-    Default: sg-09813e0ad3c1b3299
+    Default: sg-023dcd02d9b34462e
     Description: SecurityGroup for ECS 
   
   VPC:
     Type: String
-    Default: vpc-03b5d05de476da93a
+    Default: 	vpc-0da97bc6505027b59
     Description: VPC
   Family:
     Type: String
@@ -85,13 +85,13 @@ Parameters:
 
   SubnetPublic1:
     Type: String
-    Default: subnet-02142c53f9903895d
+    Default: subnet-033984601ca724de3
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
 
   SubnetPublic2:
     Type: String
-    Default: subnet-0eb6fbd0c4ad79fe4
+    Default: subnet-0c5434c4c86763bfc
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
   
