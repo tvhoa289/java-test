@@ -112,7 +112,7 @@ Resources:
   # Create a rule on the load balancer for routing traffic to the target group
 
 
-  LoadBalancerRuleApp:
+  LoadBalancerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       Actions:
@@ -124,7 +124,7 @@ Resources:
       ListenerArn: !Ref PublicLoadBalancerListener
       Priority: !Ref 'Priority'
 
-  TargetGroupApp:
+  TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckPath: !Ref 'Path'
@@ -159,7 +159,7 @@ Resources:
               awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: 'ecs'
 
-  ServiceApp:
+  Service:
     Type: AWS::ECS::Service
     Properties:
       ServiceName: !Ref 'ServiceName'
@@ -176,9 +176,9 @@ Resources:
               "SecurityGroups" : [ !Ref SecurityGroupsECS ],
               "Subnets" : [ !Ref SubnetPublic1 , !Ref SubnetPublic2 ]
           }
-      TaskDefinition: !Ref 'TaskDefinitionApp'
+      TaskDefinition: !Ref 'TaskDefinition'
       LoadBalancers:
         - ContainerName: !Ref 'ContainerName'
           ContainerPort: !Ref ContainerPort
-          TargetGroupArn: !Ref 'TargetGroupApp'
+          TargetGroupArn: !Ref 'TargetGroup'
 
