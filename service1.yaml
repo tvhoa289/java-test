@@ -221,8 +221,7 @@ Resources:
       StepScalingPolicyConfiguration:
         AdjustmentType: 'ChangeInCapacity'
         StepAdjustments:
-          - MetricIntervalUpperBound: 20
-            ScalingAdjustment: -1
+          - ScalingAdjustment: -1
         MetricAggregationType: 'Average'
         Cooldown: 60
 
@@ -248,8 +247,7 @@ Resources:
       StepScalingPolicyConfiguration:
         AdjustmentType: 'ChangeInCapacity'
         StepAdjustments:
-          - MetricIntervalUpperBound: 60
-            ScalingAdjustment: 1
+          - ScalingAdjustment: 1
         MetricAggregationType: 'Average'
         Cooldown: 60
 
