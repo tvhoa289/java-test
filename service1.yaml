@@ -61,7 +61,7 @@ Parameters:
   
   VPC:
     Type: String
-    Default: vpc-0b22c704eb420aa15
+    Default: vpc-03b5d05de476da93a
     Description: VPC
   Family:
     Type: String
@@ -97,9 +97,10 @@ Parameters:
   
   PublicLoadBalancerListener:
     Type: String
-    Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/vpc-PublicL-1F0DSFAH0CA5I/b3bc35038c1b7d15/11a1ab347412b8f3	
+    Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/lssp-Public-1MVV61GKJVST8/83b67281f7ac7aad/cf10eda9d992c45a
     Description: Listener for forward traffic
 
+  ExecutionRoleArn: arn:aws:iam::810733428226:role/lssp-ECSTaskExecutionRole-LDBF9LZ7E9F1
 Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
 
@@ -131,13 +132,14 @@ Resources:
       Protocol: HTTP
       VpcId: !Ref 'VPC'
         
-  TaskDefinitionApp:
+  TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: !Ref Family
       Cpu: !Ref 'ContainerCpu'
       Memory: !Ref 'ContainerMemory'
       NetworkMode: awsvpc
+      ExecutionRoleArn: !Ref 
       RequiresCompatibilities:
         - FARGATE
       ContainerDefinitions:
