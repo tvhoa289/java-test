@@ -139,7 +139,7 @@ Resources:
       Cpu: !Ref 'ContainerCpu'
       Memory: !Ref 'ContainerMemory'
       NetworkMode: awsvpc
-      ExecutionRoleArn: !Ref 
+      ExecutionRoleArn: !Ref ExecutionRoleArn
       RequiresCompatibilities:
         - FARGATE
       ContainerDefinitions:
