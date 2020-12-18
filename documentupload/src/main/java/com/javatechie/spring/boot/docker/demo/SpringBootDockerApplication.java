@@ -11,7 +11,7 @@ public class SpringBootDockerApplication {
 
 	@GetMapping("/document_upload")
 	public String getMessage() {
-		return "This is document_update PAGE";
+		return "This is document_update1000000 PAGE";
 	}
 
 	public static void main(String[] args) {
