@@ -221,7 +221,7 @@ Resources:
       StepScalingPolicyConfiguration:
         AdjustmentType: 'ChangeInCapacity'
         StepAdjustments:
-          - MetricIntervalLowerBound: 50
+          - MetricIntervalUpperBound: 50
             ScalingAdjustment: -1
         MetricAggregationType: 'Average'
         Cooldown: 60
@@ -278,7 +278,7 @@ Resources:
         - Name: ClusterName
           Value: !Ref ClusterName
       Statistic: Average
-      Period: 30
+      Period: 60
       EvaluationPeriods: 1
       Threshold: 50
       ComparisonOperator: LessThanOrEqualToThreshold
