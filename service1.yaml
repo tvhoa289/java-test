@@ -139,7 +139,7 @@ Resources:
       Cpu: !Ref 'ContainerCpu'
       Memory: !Ref 'ContainerMemory'
       NetworkMode: awsvpc
-      ExecutionRoleArn: !Ref ExecutionRoleArn
+      ExecutionRoleArn: !Ref 'ExecutionRoleArn'
       RequiresCompatibilities:
         - FARGATE
       ContainerDefinitions:
@@ -152,8 +152,8 @@ Resources:
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: !Ref ServiceName
-              awslogs-region: !Ref AWS::Region
+              awslogs-group: !Ref 'ServiceName'
+              awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: 'ecs'
 
   ServiceApp:
