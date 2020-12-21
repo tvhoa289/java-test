@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SpringBootDockerApplication {
 
-	@GetMapping("/Authentication")
+	@GetMapping("/notification")
 	public String getMessage() {
-		return "This is Authentication update1000000 PAGE";
+		return "This is Notification update1000000 PAGE";
 	}
 
 	public static void main(String[] args) {
