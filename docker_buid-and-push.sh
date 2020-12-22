@@ -15,7 +15,7 @@ admin = "tvhoa289/spring-boot-admin-p8087"
 dataImport = "tvhoa289/spring-boot-dataImport-p8888"
 
 #Docker build and push
-echo ${params.Choice_Image_to_build}
+echo "${params.Choice_Image_to_build}"
 
 if (${params.Choice_Image_to_build} == authentication){
     echo "build Step:"
@@ -38,7 +38,7 @@ else if (${params.Choice_Image_to_build} == cache_management){
     docker push $cache_management:$BUILD_NUMBER
     docker rmi $cache_management:$BUILD_NUMBER
 }
-else if (${params.Choice_Image_to_build} == notification){
+else if (${params.Choice_Image_to_build} == "notification"){
     docker build -t ${notification}:$BUILD_NUMBER --build-arg path=/notification/target/spring-boot-docker.jar --build-arg port=8765 .
     docker push $notification:$BUILD_NUMBER
     docker rmi $notification:$BUILD_NUMBER
