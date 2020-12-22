@@ -152,6 +152,7 @@ Resources:
       Port: !Ref 'ContainerPort'
       Protocol: HTTP
       VpcId: !Ref 'VPC'
+
   TargetGroupPrivate:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
