@@ -51,12 +51,12 @@ Parameters:
 
   SecurityGroupsECS:
     Type: String
-    Default: sg-07c792c43cd309b31
+    Default: sg-06f381b6939800611
     Description: SecurityGroup for ECS 
   
   VPC:
     Type: String
-    Default: vpc-0db51e22b4620a734
+    Default: vpc-07ff144e65d289ee1
     Description: VPC
   Family:
     Type: String
@@ -76,29 +76,30 @@ Parameters:
 
   SubnetPrivate1:
     Type: String
-    Default: subnet-003f5aefed2d0dd10
+    Default: subnet-0f3f19ed09b203350
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
 
   SubnetPrivate2:
     Type: String
-    Default: subnet-03587a4a19d854c73
+    Default: subnet-0b4167f2a3da2433c
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
   
   PrivateLoadBalancerListener:
     Type: String
-    Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/lssp-Privat-1THBIF2P54OVY/eac7896b52bf85bd/6a32e3396eeb19c9
+    Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/lssp-PrivateLoadBalancer/e4dc266180bf3e74/c1d50e996c80595a
+
     Description: Listener for forward traffic
 
   AutoscalingRole:
     Type: String
-    Default: arn:aws:iam::810733428226:role/lssp-AutoscalingRole-SOFO1H0VFG4H
+    Default: arn:aws:iam::810733428226:role/lssp-AutoscalingRole-VVUBKON54DD8
     Description: Listener for forward traffic
 
   ExecutionRoleArn:
     Type: String
-    Default: arn:aws:iam::810733428226:role/lssp-ECSTaskExecutionRole-3VFATH309H5M
+    Default: arn:aws:iam::810733428226:role/lssp-ECSTaskExecutionRole-L20GEPJBOO5J
     Description: Role for container push log.
 Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
@@ -173,7 +174,7 @@ Resources:
       NetworkConfiguration:
         AwsvpcConfiguration:
           {
-              "AssignPublicIp" : ENABLED,
+              "AssignPublicIp" : DISABLE,
               "SecurityGroups" : [ !Ref SecurityGroupsECS ],
               "Subnets" : [ !Ref SubnetPrivate1 , !Ref SubnetPrivate2 ]
           }

@@ -134,7 +134,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       Actions:
-        - TargetGroupArn: !Ref 'TargetGroup'
+        - TargetGroupArn: !Ref 'TargetGroupPrivate'
           Type: 'forward'
       Conditions:
         - Field: path-pattern
@@ -149,6 +149,16 @@ Resources:
       HealthCheckProtocol: HTTP
       TargetType: ip
       Name: !Ref 'TargetGroupName'
+      Port: !Ref 'ContainerPort'
+      Protocol: HTTP
+      VpcId: !Ref 'VPC'
+  TargetGroupPrivate:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckPath: !Ref 'Path'
+      HealthCheckProtocol: HTTP
+      TargetType: ip
+      Name: !Join ['Private',!Ref 'TargetGroupName']
       Port: !Ref 'ContainerPort'
       Protocol: HTTP
       VpcId: !Ref 'VPC'
@@ -200,6 +210,9 @@ Resources:
         - ContainerName: !Ref 'ContainerName'
           ContainerPort: !Ref 'ContainerPort'
           TargetGroupArn: !Ref 'TargetGroup'
+        - ContainerName: !Ref 'ContainerName'
+          ContainerPort: !Ref 'ContainerPort'
+          TargetGroupArn: !Ref 'TargetGroupPrivate'
 
   ScalableTarget:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
