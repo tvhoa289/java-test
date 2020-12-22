@@ -1,0 +1,189 @@
+pipeline {
+	agent any
+	environment {
+        authentication = 'tvhoa289/spring-boot-authentication-p8081'
+        Portal = 'tvhoa289/spring-boot-portal-p8082'
+        document_upload = 'tvhoa289/spring-boot-documentupload-p8088'
+        cache_management = 'tvhoa289/spring-boot-cachemanagement-p8089'
+        notification = 'tvhoa289/spring-boot-notification-p8765'
+
+        DesiredCount='1'
+        
+        
+        
+        
+        
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [
+                        [
+                            name: 'master'
+                        ]
+                    ],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [
+
+                    ],
+                    submoduleCfg: [
+
+                    ],
+                    userRemoteConfigs: [
+                        [
+                            url: 'https://github.com/tvhoa289/java-test.git'
+                        ]
+                    ]
+                ])
+            }
+        }
+        stage("Assume Role"){
+            when { 
+                expression {
+                    return params.Create_service;
+                }
+            }          
+            steps {
+                //Assume roles
+                withAWS(credentials:'aws_authen', region: 'eu-central-1')
+                {
+                    // do something
+                    sh "aws sts assume-role --role-arn arn:aws:iam::810733428226:role/lssp-dev-Role  --role-session-name $BUILD_NUMBER --duration-seconds 900 --region eu-central-1  > assume-role.txt"
+					//sh 'accessKeyId ="$(grep -oP '(?<="AccessKeyId": ")[^"]*' assume-role.txt)"'
+					sh '''#!/bin/bash
+                            echo "hello world"
+                            AccessKeyId="$(grep -oP '(?<="AccessKeyId": ")[^"]*' assume-role.txt)"
+                            SecretAccessKey="$(grep -oP '(?<="SecretAccessKey": ")[^"]*' assume-role.txt)"
+                            SessionToken="$(grep -oP '(?<="SessionToken": ")[^"]*' assume-role.txt)"
+                            cd ~/.aws
+                            rm -rf credentials
+                            pwd
+                            echo \"[default]\naws_access_key_id = $AccessKeyId\naws_secret_access_key = $SecretAccessKey\naws_session_token = $SessionToken\" > credentials
+                            cat ~/.aws/credentials
+                        '''
+					sh 'cat ~/.aws/credentials'
+					sh 'pwd'
+                }
+			}
+        }
+		stage('Create service.') {
+		    when { 
+                expression {
+                    return params.Create_service;
+                }
+            }        
+            steps {
+                sh "pwd"
+                sh "chmod 777 service1.yaml"
+                sh "echo '${Choice_ServiceName}'"
+                script {
+                    if("${params.Choice_Cluster}"== 'Lease_Self-Service_Portal-v5'){
+                        sh "chmod +x service.sh"
+                        sh 'sh service.sh "${Choice_ServiceName}" "${Choice_CPU}" "${Port_Reference}" "${Choice_Memory}" "${Family_reference}" "${Targetgroup_Name}" "${Path_healcheck}" "${Image_Url_reference}"'
+                    }else if("${params.Choice_Cluster}"== "Lease_Self-Service_Portal-v5-L2"){
+                        sh "chmod +x servicePV.sh"
+                        sh 'sh servicePV.sh "${Choice_ServiceName}" "${Choice_CPU}" "${Port_Reference}" "${Choice_Memory}" "${Family_reference}" "${Targetgroup_Name}" "${Path_healcheck}" "${Image_Url_reference}"'
+                    }
+                }
+            }
+		}
+		stage('Maven build function') {
+           steps {
+                dir("$WORKSPACE/authentication"){
+                    sh "mvn clean install"
+                }
+                dir("$WORKSPACE/Portal"){
+                    sh "mvn clean install"
+                }
+                dir("$WORKSPACE/documentupload"){
+                    sh "mvn clean install"
+                }
+                dir("$WORKSPACE/cachemanagement"){
+                    sh "mvn clean install"
+                }
+                dir("$WORKSPACE/notification"){
+                    sh "mvn clean install"
+                }
+                
+            }
+        }
+		stage('Docker build '){
+           steps {
+               script {
+                   if ("${params.Choice_Image_to_build}" == 'authentication'){
+                        sh 'echo "env.GIT_COMMIT"'
+                        sh "echo 'build images1'"
+                        sh 'docker build -t ${authentication}:$BUILD_NUMBER --build-arg path=/authentication/target/spring-boot-docker.jar --build-arg port=8081 .'
+                   }else if ("${params.Choice_Image_to_build}" == 'document_upload'){
+                        sh 'docker build -t ${document_upload}:$BUILD_NUMBER --build-arg path=/documentupload/target/spring-boot-docker.jar --build-arg port=8088 .'
+                   }else if ("${params.Choice_Image_to_build}" == 'portal'){
+                        sh 'docker build -t ${Portal}:$BUILD_NUMBER --build-arg path=/Portal/target/spring-boot-docker.jar --build-arg port=8082 .'
+                   }else if ("${params.Choice_Image_to_build}" == 'cachemanagement'){
+                        sh 'docker build -t ${cache_management}:$BUILD_NUMBER --build-arg path=/cachemanagement/target/spring-boot-docker.jar --build-arg port=8089 .'
+                   }else if ("${params.Choice_Image_to_build}" == 'notification'){
+                        sh 'docker build -t ${notification}:$BUILD_NUMBER --build-arg path=/notification/target/spring-boot-docker.jar --build-arg port=8765 .'
+                   }
+               }
+               
+           }
+		}
+		stage("Docker Push"){
+            steps {
+                sh "echo 'push images step'"
+                sh "docker logout"
+                withCredentials([string(credentialsId: '7dafd6ed-ac84-42c0-b70e-e86220b599a7', variable: 'pass')]) {
+                    sh "docker login -u tvhoa289 -p $pass"
+                    sh "docker images"
+                    script {
+                        if ("${params.Choice_Image_to_build}" == 'authentication'){
+                            sh "docker push ${authentication}:$BUILD_NUMBER"
+                            sh "docker rmi ${authentication}:$BUILD_NUMBER"
+                        }else if ("${params.Choice_Image_to_build}" == 'document_upload'){
+                            sh "docker push ${document_upload}:$BUILD_NUMBER"
+                            sh "docker rmi ${document_upload}:$BUILD_NUMBER"
+                        }else if ("${params.Choice_Image_to_build}" == 'portal'){
+                            sh "docker push ${Portal}:$BUILD_NUMBER"
+                            sh "docker rmi ${Portal}:$BUILD_NUMBER"
+                        }else if ("${params.Choice_Image_to_build}" == 'cachemanagement'){
+                            sh "docker push ${cache_management}:$BUILD_NUMBER"
+                            sh "docker rmi ${cache_management}:$BUILD_NUMBER"
+                        }else if ("${params.Choice_Image_to_build}" == 'notification'){
+                            sh "docker push ${notification}:$BUILD_NUMBER"
+                            sh "docker rmi ${notification}:$BUILD_NUMBER"
+                        }
+                    }
+                }
+            }
+		}
+		stage("UpdateSV"){
+		    when { 
+                expression {
+                    return params.Update_service;
+                }
+            }        
+            steps {
+                withAWS(credentials:'aws_authen', region: 'eu-central-1'){
+                    sh "chmod +x updatesSV.sh"
+                    sh "aws sts assume-role --role-arn arn:aws:iam::810733428226:role/lssp-dev-Role  --role-session-name $BUILD_NUMBER --duration-seconds 900 --region eu-central-1  > assume-role.txt"
+					//sh 'accessKeyId ="$(grep -oP '(?<="AccessKeyId": ")[^"]*' assume-role.txt)"'
+					sh '''#!/bin/bash
+                            echo "hello world"
+                            AccessKeyId="$(grep -oP '(?<="AccessKeyId": ")[^"]*' assume-role.txt)"
+                            SecretAccessKey="$(grep -oP '(?<="SecretAccessKey": ")[^"]*' assume-role.txt)"
+                            SessionToken="$(grep -oP '(?<="SessionToken": ")[^"]*' assume-role.txt)"
+                            cd ~/.aws
+                            rm -rf credentials
+                            pwd
+                            echo \"[default]\naws_access_key_id = $AccessKeyId\naws_secret_access_key = $SecretAccessKey\naws_session_token = $SessionToken\" > credentials
+                            cat ~/.aws/credentials
+                        '''
+					sh 'cat ~/.aws/credentials'
+					sh 'pwd'
+                    sh 'sh updatesSV.sh "${Choice_ServiceName}" "${Choice_CPU}" "${Port_Reference}" "${Choice_Memory}" "${Family_reference}" "${Image_Url_reference}" "${Choice_Cluster}" "$BUILD_NUMBER"'
+                }
+            }
+		}    
+    }
+}
