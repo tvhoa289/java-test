@@ -89,7 +89,6 @@ Parameters:
   PrivateLoadBalancerListener:
     Type: String
     Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/lssp-PrivateLoadBalancer/e4dc266180bf3e74/c1d50e996c80595a
-
     Description: Listener for forward traffic
 
   AutoscalingRole:
@@ -174,7 +173,7 @@ Resources:
       NetworkConfiguration:
         AwsvpcConfiguration:
           {
-              "AssignPublicIp" : DISABLE,
+              "AssignPublicIp" : DISABLED,
               "SecurityGroups" : [ !Ref SecurityGroupsECS ],
               "Subnets" : [ !Ref SubnetPrivate1 , !Ref SubnetPrivate2 ]
           }
