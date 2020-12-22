@@ -17,5 +17,7 @@ a=${Choice_Image_to_build}
 #Docker build and push
 
 echo "$BUILD_NUMBER"
+echo $document_upload
+echo $document_upload
 echo "${Choice_Image_to_build}"
 
