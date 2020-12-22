@@ -15,6 +15,7 @@ admin = 'tvhoa289/spring-boot-admin-p8087'
 dataImport = 'tvhoa289/spring-boot-dataImport-p8888'
 
 #Docker build and push
+echo "${params.Choice_Image_to_build}"
 if (${params.Choice_Image_to_build} == authentication){
     echo 'build Step:'
     docker build -t ${authentication}:$BUILD_NUMBER --build-arg path=/authentication/target/spring-boot-docker.jar --build-arg port=8081 .
