@@ -51,12 +51,12 @@ Parameters:
 
   SecurityGroupsECS:
     Type: String
-    Default: sg-07c792c43cd309b31
+    Default: sg-0c7a79b7629bcc382
     Description: SecurityGroup for ECS 
   
   VPC:
     Type: String
-    Default: vpc-0db51e22b4620a734
+    Default: vpc-07ff144e65d289ee1
     Description: VPC
   Family:
     Type: String
@@ -76,29 +76,35 @@ Parameters:
 
   SubnetPublic1:
     Type: String
-    Default: subnet-01c78e55f5b8c467f
+    Default: subnet-02a4d854fde732522
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
 
   SubnetPublic2:
     Type: String
-    Default: subnet-005a5cca7cb7695a4
+    Default: subnet-00c663e51cf7ce392
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
   
   PublicLoadBalancerListener:
     Type: String
-    Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/lssp-Public-Y986SJ6QBJKK/5e3a39a0881a68e9/9b062bc92392c0ea
+    Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/lssp-PublicLoadBalancer/de3943993baea71a/d4ac94794134f02e
     Description: Listener for forward traffic
+
+  PrivateALBEcsPublicListener:
+    Type: String
+    Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/lssp-PrivateALBEcsPublic/efa0e7fd374acd0a/8d49cef0f666e3d3
+    Description: Listener for forward traffic
+
 
   AutoscalingRole:
     Type: String
-    Default: arn:aws:iam::810733428226:role/lssp-AutoscalingRole-SOFO1H0VFG4H
+    Default: arn:aws:iam::810733428226:role/lssp-AutoscalingRole-VVUBKON54DD8
     Description: Listener for forward traffic
 
   ExecutionRoleArn:
     Type: String
-    Default: arn:aws:iam::810733428226:role/lssp-ECSTaskExecutionRole-3VFATH309H5M
+    Default: arn:aws:iam::810733428226:role/lssp-ECSTaskExecutionRole-L20GEPJBOO5J
     Description: Role for container push log.
 Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
@@ -110,7 +116,7 @@ Resources:
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Join ['', [/ecs/, !Ref ServiceName, TaskDefinition]]
+      LogGroupName: !Join ['', [/ecs/, !Ref ServiceName]]
 
   LoadBalancerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
@@ -122,6 +128,18 @@ Resources:
         - Field: path-pattern
           Values: [!Ref 'Path']
       ListenerArn: !Ref PublicLoadBalancerListener
+      Priority: !Ref 'Priority'
+
+  LoadBalancerRulePrivate:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions:
+        - TargetGroupArn: !Ref 'TargetGroup'
+          Type: 'forward'
+      Conditions:
+        - Field: path-pattern
+          Values: [!Ref 'Path']
+      ListenerArn: !Ref PrivateALBEcsPublicListener
       Priority: !Ref 'Priority'
 
   TargetGroup:
