@@ -158,7 +158,7 @@ Resources:
       HealthCheckPath: !Ref 'Path'
       HealthCheckProtocol: HTTP
       TargetType: ip
-      Name: !Join [':', ['Private',!Ref 'TargetGroupName']]
+      Name: !Join ['-', ['Private',!Ref 'TargetGroupName']]
       Port: !Ref 'ContainerPort'
       Protocol: HTTP
       VpcId: !Ref 'VPC'
