@@ -27,52 +27,52 @@ else if (${params.Choice_Image_to_build} == document_upload){
     docker push ${document_upload}:$BUILD_NUMBER
     docker rmi ${document_upload}:$BUILD_NUMBER
 }
-else if (${params.Choice_Image_to_build} == 'portal'){
+else if (${params.Choice_Image_to_build} == portal){
     docker build -t ${Portal}:$BUILD_NUMBER --build-arg path=/Portal/target/spring-boot-docker.jar --build-arg port=8082 .
     docker push ${Portal}:$BUILD_NUMBER
     docker rmi ${Portal}:$BUILD_NUMBER
 }
-else if (${params.Choice_Image_to_build} == 'cache_management'){
+else if (${params.Choice_Image_to_build} == cache_management){
     docker build -t ${cache_management}:$BUILD_NUMBER --build-arg path=/cachemanagement/target/spring-boot-docker.jar --build-arg port=8089 .
     docker push ${cache_management}:$BUILD_NUMBER
     docker rmi ${cache_management}:$BUILD_NUMBER
 }
-else if (${params.Choice_Image_to_build} == 'notification'){
+else if (${params.Choice_Image_to_build} == notification){
     docker build -t ${notification}:$BUILD_NUMBER --build-arg path=/notification/target/spring-boot-docker.jar --build-arg port=8765 .
     docker push ${notification}:$BUILD_NUMBER
     docker rmi ${notification}:$BUILD_NUMBER
 }
-else if (${params.Choice_Image_to_build} == 'user'){
+else if (${params.Choice_Image_to_build} == user){
     docker build -t ${user}:$BUILD_NUMBER --build-arg path=/user/target/spring-boot-docker.jar --build-arg port=8080 .
     docker push ${user}:$BUILD_NUMBER"
     docker rmi ${user}:$BUILD_NUMBER"
 }
-else if (${params.Choice_Image_to_build} == 'auditlog'){
+else if (${params.Choice_Image_to_build} == auditlog){
     docker build -t ${auditlog}:$BUILD_NUMBER --build-arg path=/auditlog/target/spring-boot-docker.jar --build-arg port=8083 .
     docker push ${auditlog}:$BUILD_NUMBER"
     docker rmi ${auditlog}:$BUILD_NUMBER"
 } 
-else if (${params.Choice_Image_to_build} == 'dataquery'){
+else if (${params.Choice_Image_to_build} == dataquery){
     docker build -t ${dataquery}:$BUILD_NUMBER --build-arg path=/dataquery/target/spring-boot-docker.jar --build-arg port=8084 .
     docker push ${dataquery}:$BUILD_NUMBER
     docker rmi ${dataquery}:$BUILD_NUMBER
 }
-else if (${params.Choice_Image_to_build} == 'ecwrcontrol'){
+else if (${params.Choice_Image_to_build} == ecwrcontrol){
     docker build -t ${ecwrcontrol}:$BUILD_NUMBER --build-arg path=/ecwrcontrol/target/spring-boot-docker.jar --build-arg port=8085 .
     docker push ${ecwrcontrol}:$BUILD_NUMBER
     docker rmi ${ecwrcontrol}:$BUILD_NUMBER
 }
-else if (${params.Choice_Image_to_build} == 'configuration'){
+else if (${params.Choice_Image_to_build} == configuration){
     docker build -t ${configuration}:$BUILD_NUMBER --build-arg path=/configuration/target/spring-boot-docker.jar --build-arg port=8086 .
     docker push ${configuration}:$BUILD_NUMBER
     docker rmi ${configuration}:$BUILD_NUMBER
 }
-else if (${params.Choice_Image_to_build} == 'admin'){
+else if (${params.Choice_Image_to_build} == admin){
     docker build -t ${admin}:$BUILD_NUMBER --build-arg path=/admin/target/spring-boot-docker.jar --build-arg port=8087 .
     docker push ${admin}:$BUILD_NUMBER
     docker rmi ${admin}:$BUILD_NUMBER
 }
-else if (${params.Choice_Image_to_build} == 'dataImport'){
+else if (${params.Choice_Image_to_build} == dataImport){
     docker build -t ${dataImport}:$BUILD_NUMBER --build-arg path=/dataImport/target/spring-boot-docker.jar --build-arg port=8888 .
     docker push ${dataImport}:$BUILD_NUMBER
     docker rmi ${dataImport}:$BUILD_NUMBER
