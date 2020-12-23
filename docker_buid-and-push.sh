@@ -12,7 +12,7 @@ dataquery="tvhoa289/spring-boot-dataquery-p8084"
 ecwrcontrol="tvhoa289/spring-boot-ecwrcontrol-p8085"
 configuration="tvhoa289/spring-boot-configuration-p8086"
 admin="tvhoa289/spring-boot-admin-p8087"
-dataImport="tvhoa289/spring-boot-dataImport-p8888"
+dataImport="tvhoa289/spring-boot-dataimport-p8888"
 #Docker build and push
 
 echo "$BUILD_NUMBER"
