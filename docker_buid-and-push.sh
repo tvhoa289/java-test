@@ -14,7 +14,7 @@ configuration = "tvhoa289/spring-boot-configuration-p8086"
 admin = "tvhoa289/spring-boot-admin-p8087"
 dataImport = "tvhoa289/spring-boot-dataImport-p8888"
 #Docker build and push
-
+a=$BUILD_NUMBER
 echo "$BUILD_NUMBER"
 echo "${Choice_Image_to_build}"
 
@@ -31,9 +31,9 @@ elif [ "${Choice_Image_to_build}" == "documentupload" ]
         docker rmi $document_upload:$BUILD_NUMBER
 elif [ "${Choice_Image_to_build}" == "portal" ]
     then
-        docker build -t $portal:bac --build-arg path=/portal/target/spring-boot-docker.jar --build-arg port=8082 .
-        docker push $portal:bac
-        docker rmi $portal:bac
+        docker build -t $portal:$a --build-arg path=/portal/target/spring-boot-docker.jar --build-arg port=8082 .
+        docker push $portal:$a
+        docker rmi $portal:$a
         
 elif [ "${Choice_Image_to_build}" == "cachemanagement" ]
     then
