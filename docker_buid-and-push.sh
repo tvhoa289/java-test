@@ -43,7 +43,7 @@ elif ["${Choice_Image_to_build}" == "notification"]
         docker build -t ${notification}:$BUILD_NUMBER --build-arg path=/notification/target/spring-boot-docker.jar --build-arg port=8765 .
         docker push $notification:$BUILD_NUMBER
         docker rmi $notification:$BUILD_NUMBER
-elif ["${Choice_Image_to_build}" == "user"]
+elif [ "${Choice_Image_to_build}" == "user" ]
     then
         docker build -t $user:$BUILD_NUMBER --build-arg path=/user/target/spring-boot-docker.jar --build-arg port=8080 .
         docker push $user:$BUILD_NUMBER
