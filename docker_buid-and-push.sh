@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 
 authentication = 'tvhoa289/spring-boot-authentication-p8081'
