@@ -1,12 +1,12 @@
 #!/bin/sh
 
 
-authentication ="tvhoa289/spring-boot-authentication-p8081"
-portal ="aaa"
+authentication = 'tvhoa289/spring-boot-authentication-p8081'
+portal = 'aaa'
 document_upload ="tvhoa289/spring-boot-documentupload-p8088"
 cache_management ="tvhoa289/spring-boot-cachemanagement-p8089"
 notification ="tvhoa289/spring-boot-notification-p8765"
-user ="tvhoa289/spring-boot-user-p8080"
+user = 'tvhoa289/spring-boot-user-p8080'
 auditlog ="tvhoa289/spring-boot-auditlog-p8083"
 dataquery ="tvhoa289/spring-boot-dataquery-p8084"
 ecwrcontrol = "tvhoa289/spring-boot-ecwrcontrol-p8085"
@@ -19,6 +19,7 @@ echo "$BUILD_NUMBER"
 echo "${Choice_Image_to_build}"
 echo $portal
 echo "$portal"
+echo "$user"
 
 if [ "${Choice_Image_to_build}" == "authentication" ]
     then
