@@ -17,7 +17,7 @@ dataImport = "tvhoa289/spring-boot-dataImport-p8888"
 
 echo "$BUILD_NUMBER"
 echo "${Choice_Image_to_build}"
-echo "$portal"
+echo $portal
 
 if [ "${Choice_Image_to_build}" == "authentication" ]
     then
