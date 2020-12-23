@@ -58,7 +58,6 @@ elif ["${Choice_Image_to_build}" == "dataquery"]
         docker build -t $dataquery:$BUILD_NUMBER --build-arg path=/dataquery/target/spring-boot-docker.jar --build-arg port=8084 .
         docker push $dataquery:$BUILD_NUMBER
         docker rmi $dataquery:$BUILD_NUMBER
-}
 elif ["${Choice_Image_to_build}" == "ecwrcontrol"]
     then
         docker build -t $ecwrcontrol:$BUILD_NUMBER --build-arg path=/ecwrcontrol/target/spring-boot-docker.jar --build-arg port=8085 .
