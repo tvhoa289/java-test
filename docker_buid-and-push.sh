@@ -16,7 +16,7 @@ dataImport = "tvhoa289/spring-boot-dataImport-p8888"
 #Docker build and push
 
 echo "$BUILD_NUMBER"
-ech "${Choice_Image_to_build}"
+echo "${Choice_Image_to_build}"
 
 if [ "${Choice_Image_to_build}" == "authentication" ]
     then
@@ -29,7 +29,7 @@ elif ["${Choice_Image_to_build}" == "document_upload"]
         docker build -t $document_upload:$BUILD_NUMBER --build-arg path=/documentupload/target/spring-boot-docker.jar --build-arg port=8088 .
         docker push $document_upload:$BUILD_NUMBER
         docker rmi $document_upload:$BUILD_NUMBER
-elif ["${Choice_Image_to_build}" == "portal"]
+elif [ "${Choice_Image_to_build}" == "portal" ]
     then
         docker build -t $portal:$BUILD_NUMBER --build-arg path=/Portal/target/spring-boot-docker.jar --build-arg port=8082 .
         docker push $portal:$BUILD_NUMBER
