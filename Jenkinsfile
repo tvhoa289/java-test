@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage("Assume Role"){
+        stage("test"){
             steps {
                 sh 'cat ~/.aws/credentials'
             }
