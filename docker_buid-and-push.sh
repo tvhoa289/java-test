@@ -16,9 +16,6 @@ dataImport="tvhoa289/spring-boot-dataimport-p8888"
 #Docker build and push
 
 echo "$BUILD_NUMBER"
-echo "${Choice_Image_to_build}"
-echo $portal
-echo $user
 
 if [ "${Choice_Image_to_build}" == "authentication" ]
     then
