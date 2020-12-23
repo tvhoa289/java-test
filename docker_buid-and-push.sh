@@ -24,7 +24,7 @@ if [ "${Choice_Image_to_build}" == "authentication" ]
         docker build -t $authentication:$BUILD_NUMBER --build-arg path=/authentication/target/spring-boot-docker.jar --build-arg port=8081 .
         docker push $authentication:$BUILD_NUMBER
         docker rmi $authentication:$BUILD_NUMBER
-elif ["${Choice_Image_to_build}" == "document_upload"];
+elif "${Choice_Image_to_build}" == "document_upload"
     then
         docker build -t $document_upload:$BUILD_NUMBER --build-arg path=/documentupload/target/spring-boot-docker.jar --build-arg port=8088 .
         docker push $document_upload:$BUILD_NUMBER
