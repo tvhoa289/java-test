@@ -2,30 +2,6 @@ pipeline {
 	agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [
-                        [
-                            name: 'master'
-                        ]
-                    ],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [
-
-                    ],
-                    submoduleCfg: [
-
-                    ],
-                    userRemoteConfigs: [
-                        [
-                            url: 'https://github.com/tvhoa289/java-test.git'
-                        ]
-                    ]
-                ])
-            }
-        }
         stage("Assume Role"){
             when { 
                 expression {
