@@ -14,9 +14,10 @@ configuration = "tvhoa289/spring-boot-configuration-p8086"
 admin = "tvhoa289/spring-boot-admin-p8087"
 dataImport = "tvhoa289/spring-boot-dataImport-p8888"
 #Docker build and push
-a=$BUILD_NUMBER
+
 echo "$BUILD_NUMBER"
 echo "${Choice_Image_to_build}"
+echo "$portal"
 
 if [ "${Choice_Image_to_build}" == "authentication" ]
     then
