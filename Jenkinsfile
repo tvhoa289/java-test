@@ -1,7 +1,11 @@
 pipeline {
 
-    stage ('Checkout') {
-        sh "echo 'hello'"
+    stages {
+        stage ('Checkout') {
+            sh "echo 'hello'"
+        }
+        stage ('abc') {
+            sh "ls -la"
+        }
     }
-    
 }
