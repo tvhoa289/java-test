@@ -2,7 +2,7 @@
 
 
 authentication = 'tvhoa289/spring-boot-authentication-p8081'
-portal = 'aaa'
+portal='aaa'
 document_upload ="tvhoa289/spring-boot-documentupload-p8088"
 cache_management ="tvhoa289/spring-boot-cachemanagement-p8089"
 notification ="tvhoa289/spring-boot-notification-p8765"
