@@ -1,6 +1,6 @@
 pipeline {
 	agent any
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -34,10 +34,10 @@ pipeline {
             }          
             steps {
                 //Assume roles
-                withAWS(credentials:'aws_authen', region: 'eu-central-1')
+                withAWS(credentials:'aws_authen', region: 'ap-southeast-1')
                 {
                     // do something
-                    sh "aws sts assume-role --role-arn arn:aws:iam::810733428226:role/lssp-dev-Role  --role-session-name $BUILD_NUMBER --duration-seconds 900 --region eu-central-1  > assume-role.txt"
+                    sh "aws sts assume-role --role-arn arn:aws:iam::810733428226:role/lssp-dev-Role  --role-session-name $BUILD_NUMBER --duration-seconds 900 --region ap-southeast-1 > assume-role.txt"
 					//sh 'accessKeyId ="$(grep -oP '(?<="AccessKeyId": ")[^"]*' assume-role.txt)"'
 					sh '''#!/bin/bash
                             echo "hello world"
