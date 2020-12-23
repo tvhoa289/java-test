@@ -32,8 +32,8 @@ elif [ "${Choice_Image_to_build}" == "documentupload" ]
 elif [ "${Choice_Image_to_build}" == "portal" ]
     then
         docker build -t $portal:bac --build-arg path=/portal/target/spring-boot-docker.jar --build-arg port=8082 .
-        docker push $portal:$BUILD_NUMBER
-        docker rmi $portal:$BUILD_NUMBER
+        docker push $portal:bac
+        docker rmi $portal:bac
         
 elif [ "${Choice_Image_to_build}" == "cachemanagement" ]
     then
