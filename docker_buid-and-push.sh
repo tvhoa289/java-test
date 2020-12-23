@@ -28,12 +28,12 @@ elif ["${Choice_Image_to_build}" == "document_upload"]
         docker build -t $document_upload:$BUILD_NUMBER --build-arg path=/documentupload/target/spring-boot-docker.jar --build-arg port=8088 .
         docker push $document_upload:$BUILD_NUMBER
         docker rmi $document_upload:$BUILD_NUMBER
-elif ["${Choice_Image_to_build}" == portal)
+elif ["${Choice_Image_to_build}" == "portal"]
     then
         docker build -t $portal:$BUILD_NUMBER --build-arg path=/Portal/target/spring-boot-docker.jar --build-arg port=8082 .
         docker push $portal:$BUILD_NUMBER
         docker rmi $portal:$BUILD_NUMBER
-elif ["${Choice_Image_to_build}" == "cache_management")
+elif ["${Choice_Image_to_build}" == "cache_management"]
     then
         docker build -t $cache_management:$BUILD_NUMBER --build-arg path=/cachemanagement/target/spring-boot-docker.jar --build-arg port=8089 .
         docker push $cache_management:$BUILD_NUMBER
@@ -43,7 +43,7 @@ elif ["${Choice_Image_to_build}" == "notification"]
         docker build -t ${notification}:$BUILD_NUMBER --build-arg path=/notification/target/spring-boot-docker.jar --build-arg port=8765 .
         docker push $notification:$BUILD_NUMBER
         docker rmi $notification:$BUILD_NUMBER
-elif ["${Choice_Image_to_build}" == user]
+elif ["${Choice_Image_to_build}" == "user"]
     then
         docker build -t $user:$BUILD_NUMBER --build-arg path=/user/target/spring-boot-docker.jar --build-arg port=8080 .
         docker push $user:$BUILD_NUMBER
