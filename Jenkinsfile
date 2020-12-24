@@ -8,7 +8,7 @@ pipeline {
                 sh 'aws --version'
                 sh 'which aws'
                 sh 'whereis aws'
-                sh "sudo ./aws/install"
+
             }
         }
         stage("Assume Role"){
@@ -37,6 +37,8 @@ pipeline {
                         '''
 					sh 'cat ~/.aws/credentials'
 					sh 'pwd'
+                    sh "aws ecr create-repository --repository-name lssp-portal --image-scanning-configuration scanOnPush=true --region ap-southeast-1"
+
                 }
 			}
         }
