@@ -105,7 +105,6 @@ pipeline {
                 sh "pwd"
                 sh " ls -la"
                 sh "aws ecr get-login --region ap-southeast-1"
-                sh "docker images"
                 sh "echo '${params.Choice_ServiceName}'"
                 sh 'sh docker_buid-and-push.sh "$BUILD_NUMBER" "${Choice_ServiceName}"'
                 sh "docker images"
