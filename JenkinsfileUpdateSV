@@ -107,7 +107,9 @@ pipeline {
                         sh "chmod +x docker_buid-and-push.sh"
                         sh "pwd"
                         sh " ls -la"
-                        sh "aws ecr get-login --no-include-email --region ap-southeast-1"
+                        sh "echo '#!/bin/bash' > login.sh"
+                        sh "chmod +x login.sh"
+                        sh "aws ecr get-login --no-include-email --region ap-southeast-1 >>login.sh" 
                         sh "echo '${params.Choice_ServiceName}'"
                         sh './docker_buid-and-push.sh "$BUILD_NUMBER" "${Choice_ServiceName}"'
                         sh "docker images"
