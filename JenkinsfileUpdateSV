@@ -112,8 +112,8 @@ pipeline {
                 sh './docker_buid-and-push.sh "$BUILD_NUMBER" "${Choice_ServiceName}"'
                 sh "docker images"
                 }
-        
             }
+        }
         stage("UpdateSV"){
 		    when { 
                 expression {
