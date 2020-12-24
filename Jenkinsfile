@@ -22,7 +22,7 @@ pipeline {
                 withAWS(credentials:'aws_authen', region: 'ap-southeast-1')
                 {
                     // do something
-                    sh "aws sts assume-role --role-arn arn:aws:iam::810733428226:role/lssp-dev-Role  --role-session-name $BUILD_NUMBER --duration-seconds 900 --region ap-southeast-1 > assume-role.txt"
+                    sh "aws sts assume-role --role-arn arn:aws:iam::810733428226:role/lssp-dev-Role  --role-session-name lssp-$BUILD_NUMBER --duration-seconds 900 --region ap-southeast-1 > assume-role.txt"
 					//sh 'accessKeyId ="$(grep -oP '(?<="AccessKeyId": ")[^"]*' assume-role.txt)"'
 					sh '''#!/bin/bash
                             echo "hello world"
@@ -59,7 +59,7 @@ pipeline {
             }        
             steps {
                 sh "pwd"
-                sh "chmod 777 service1.yaml"
+                sh "chmod 777 servicePB.yaml"
                 sh "echo '${Choice_ServiceName}'"
                 script {
                     if("${params.Choice_Cluster}"== 'Lease_Self-Service_Portal-v5'){
