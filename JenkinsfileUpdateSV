@@ -100,15 +100,18 @@ pipeline {
         }
         stage("Docker Build and  Push"){ 
             steps {
-                sh "echo 'build and push images step'"
-                sh "docker logout"
-                sh "chmod +x docker_buid-and-push.sh"
-                sh "pwd"
-                sh " ls -la"
-                sh "aws ecr get-login --region ap-southeast-1 --no-include-email"
-                sh "echo '${params.Choice_ServiceName}'"
-                sh './docker_buid-and-push.sh "$BUILD_NUMBER" "${Choice_ServiceName}"'
-                sh "docker images"
+                script {
+                    sh "echo 'build and push images step'"
+                    sh "docker logout"
+                    sh "chmod +x docker_buid-and-push.sh"
+                    sh "pwd"
+                    sh " ls -la"
+                    sh "aws ecr get-login --no-include-email --region us-east-1"
+                    sh "echo '${params.Choice_ServiceName}'"
+                    sh './docker_buid-and-push.sh "$BUILD_NUMBER" "${Choice_ServiceName}"'
+                    sh "docker images"
+                }
+                
             }
         }
         stage("UpdateSV"){
