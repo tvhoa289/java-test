@@ -1,0 +1,126 @@
+pipeline {
+    agent any
+
+    stages {
+        stage("info"){
+            steps {
+                sh 'cat ~/.aws/credentials'
+                sh 'aws --version'
+                sh 'which aws'
+                sh 'whereis aws'
+
+            }
+        }
+        stage('Maven build function') {
+           steps {
+                script {
+                    if ("${params.Choice_ServiceName}" == 'authentication'){
+                        dir("$WORKSPACE/authentication"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'documentupload'){
+                        dir("$WORKSPACE/documentupload"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'portal'){
+                        dir("$WORKSPACE/portal"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'cachemanagement'){
+                        dir("$WORKSPACE/cache_management"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'notification'){
+                        dir("$WORKSPACE/notification"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'user'){
+                        dir("$WORKSPACE/user"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'auditlog'){
+                        dir("$WORKSPACE/auditlog"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'dataquery'){
+                        dir("$WORKSPACE/dataquery"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'ecwrcontrol'){
+                        dir("$WORKSPACE/ecwrcontrol"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'configuration'){
+                        dir("$WORKSPACE/configuration"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'admin'){
+                        dir("$WORKSPACE/admin"){
+                            sh "mvn clean install"
+                        }
+                    }else if ("${params.Choice_ServiceName}" == 'dataImport'){
+                        dir("$WORKSPACE/dataImport"){
+                            sh "mvn clean install"
+                        }
+                    }
+                }
+            }
+        }
+        stage("Docker Build and  Push"){
+		   
+            steps {
+                sh "echo 'build and push images step'"
+                sh "docker logout"
+                sh "chmod +x docker_buid-and-push.sh"
+                sh "pwd"
+                sh " ls -la"
+                withAWS(credentials:'aws_authen', region: 'ap-southeast-1'){
+                    sh "aws ecr get-login --region ap-southeast-1"
+                    sh "docker images"
+                    sh "echo '${params.Choice_ServiceName}'"
+                    sh 'sh docker_buid-and-push.sh "$BUILD_NUMBER" "${Choice_ServiceName}"'
+                }
+                sh "docker images"
+            }
+		}
+        stage("Assume Role"){
+            when { 
+                expression {
+                    return params.Create_service;
+                }
+            }          
+            steps {
+                //Assume roles
+                withAWS(credentials:'aws_authen', region: 'ap-southeast-1')
+                {
+                    // do something
+                    sh "aws sts assume-role --role-arn arn:aws:iam::810733428226:role/lssp-dev-Role  --role-session-name $BUILD_NUMBER --duration-seconds 900 --region ap-southeast-1 > assume-role.txt"
+					//sh 'accessKeyId ="$(grep -oP '(?<="AccessKeyId": ")[^"]*' assume-role.txt)"'
+					sh '''#!/bin/bash
+                            echo "hello world"
+                            AccessKeyId="$(grep -oP '(?<="AccessKeyId": ")[^"]*' assume-role.txt)"
+                            SecretAccessKey="$(grep -oP '(?<="SecretAccessKey": ")[^"]*' assume-role.txt)"
+                            SessionToken="$(grep -oP '(?<="SessionToken": ")[^"]*' assume-role.txt)"
+                            cd ~/.aws
+                            rm -rf credentials
+                            pwd
+                            echo \"[default]\naws_access_key_id = $AccessKeyId\naws_secret_access_key = $SecretAccessKey\naws_session_token = $SessionToken\" > credentials
+                            cat ~/.aws/credentials
+                        '''
+					sh 'cat ~/.aws/credentials'
+					sh 'pwd'
+                }
+			}
+        }
+        stage("UpdateSV"){
+		    when { 
+                expression {
+                    return params.Update_service;
+                }
+            }
+            steps {
+                sh 'sh updatesSV.sh "${Choice_ServiceName}" "${Choice_CPU}" "${Port_Reference}" "${Choice_Memory}" "${Family_reference}" "${Image_Url_reference}" "${Choice_Cluster}" "$BUILD_NUMBER"'
+            }
+        }
+    }
+}

@@ -2,12 +2,12 @@
 
 
 authentication="tvhoa289/spring-boot-authentication-p8081"
-portal="tvhoa289/spring-boot-portal-p8082"
-document_upload="tvhoa289/spring-boot-documentupload-p8088"
+portal="810733428226.dkr.ecr.ap-southeast-1.amazonaws.com/lssp-portal-p8082"
+document_upload="810733428226.dkr.ecr.ap-southeast-1.amazonaws.com/lssp-documentupload-p8088"
 cache_management="tvhoa289/spring-boot-cachemanagement-p8089"
 notification="tvhoa289/spring-boot-notification-p8765"
 user="tvhoa289/spring-boot-user-p8080"
-auditlog="tvhoa289/spring-boot-auditlog-p8083"
+auditlog="810733428226.dkr.ecr.ap-southeast-1.amazonaws.com/lssp-auditlog-p8083"
 dataquery="tvhoa289/spring-boot-dataquery-p8084"
 ecwrcontrol="tvhoa289/spring-boot-ecwrcontrol-p8085"
 configuration="tvhoa289/spring-boot-configuration-p8086"
@@ -16,7 +16,7 @@ dataImport="tvhoa289/spring-boot-dataimport-p8888"
 #Docker build and push
 
 echo "$BUILD_NUMBER"
-
+a="base"
 if [ "${Choice_Image_to_build}" == "authentication" ]
     then
         echo "build Step:"
@@ -25,14 +25,14 @@ if [ "${Choice_Image_to_build}" == "authentication" ]
         docker rmi $authentication:$BUILD_NUMBER
 elif [ "${Choice_Image_to_build}" == "documentupload" ]
     then
-        docker build -t $document_upload:$BUILD_NUMBER --build-arg path=/documentupload/target/spring-boot-docker.jar --build-arg port=8088 .
-        docker push $document_upload:$BUILD_NUMBER
-        docker rmi $document_upload:$BUILD_NUMBER
+        docker build -t $document_upload:$a --build-arg path=/documentupload/target/spring-boot-docker.jar --build-arg port=8088 .
+        docker push $document_upload:$a
+        docker rmi $document_upload:$a
 elif [ "${Choice_Image_to_build}" == "portal" ]
     then
-        docker build -t $portal:$BUILD_NUMBER --build-arg path=/portal/target/spring-boot-docker.jar --build-arg port=8082 .
-        docker push $portal:$BUILD_NUMBER
-        docker rmi $portal:$BUILD_NUMBER
+        docker build -t $portal:$a --build-arg path=/portal/target/spring-boot-docker.jar --build-arg port=8082 .
+        docker push $portal:$a
+        docker rmi $portal:$a
         
 elif [ "${Choice_Image_to_build}" == "cachemanagement" ]
     then
@@ -51,9 +51,9 @@ elif [ "${Choice_Image_to_build}" == "user" ]
         docker rmi $user:$BUILD_NUMBER
 elif [ "${Choice_Image_to_build}" == "auditlog" ]
     then
-        docker build -t $auditlog:$BUILD_NUMBER --build-arg path=/auditlog/target/spring-boot-docker.jar --build-arg port=8083 .
-        docker push $auditlog:$BUILD_NUMBER
-        docker rmi $auditlog:$BUILD_NUMBER
+        docker build -t $auditlog:$a --build-arg path=/auditlog/target/spring-boot-docker.jar --build-arg port=8083 .
+        docker push $auditlog:$a
+        docker rmi $auditlog:$a
 elif [ "${Choice_Image_to_build}" == "dataquery" ]
     then
         docker build -t $dataquery:$BUILD_NUMBER --build-arg path=/dataquery/target/spring-boot-docker.jar --build-arg port=8084 .
