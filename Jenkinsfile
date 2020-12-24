@@ -6,6 +6,8 @@ pipeline {
             steps {
                 sh 'cat ~/.aws/credentials'
                 sh 'aws --version'
+                sh 'pip3 --version'
+                sh 'pip --version'
             }
         }
         stage("Assume Role"){
