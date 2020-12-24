@@ -9,6 +9,8 @@ pipeline {
                 sh 'which aws'
                 sh 'whereis aws'
                 sh 'docker -v'
+                sh 'whoami'
+                sh 'usermod -aG docker jenkins'
 
             }
         }
