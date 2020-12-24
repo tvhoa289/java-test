@@ -69,7 +69,7 @@ pipeline {
         stage("Assume Role"){
             when { 
                 expression {
-                    return params.Create_service;
+                    return params.Update_service;
                 }
             }          
             steps {
@@ -107,10 +107,10 @@ pipeline {
                 sh "docker images"
                 sh "echo '${params.Choice_ServiceName}'"
                 sh 'sh docker_buid-and-push.sh "$BUILD_NUMBER" "${Choice_ServiceName}"'
-                }
                 sh "docker images"
+                }
+        
             }
-		}
         stage("UpdateSV"){
 		    when { 
                 expression {
