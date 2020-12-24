@@ -6,8 +6,8 @@ pipeline {
             steps {
                 sh 'cat ~/.aws/credentials'
                 sh 'aws --version'
-                sh 'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"'
-                sh 'unzip awscliv2.zip'
+                sh 'which aws'
+                sh 'whereis aws'
                 sh "sudo ./aws/install"
             }
         }
