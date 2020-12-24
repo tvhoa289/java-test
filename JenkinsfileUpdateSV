@@ -107,10 +107,10 @@ pipeline {
                 sh "pwd"
                 sh " ls -la"
                 docker.withRegistry('https://810733428226.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:aws_authen') {
-                sh "aws ecr get-login --region ap-southeast-1"
-                sh "echo '${params.Choice_ServiceName}'"
-                sh './docker_buid-and-push.sh "$BUILD_NUMBER" "${Choice_ServiceName}"'
-                sh "docker images"
+                    sh "aws ecr get-login --region ap-southeast-1"
+                    sh "echo '${params.Choice_ServiceName}'"
+                    sh './docker_buid-and-push.sh "$BUILD_NUMBER" "${Choice_ServiceName}"'
+                    sh "docker images"
                 }
             }
         }
