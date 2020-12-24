@@ -10,7 +10,8 @@ pipeline {
                 sh 'whereis aws'
                 sh 'docker -v'
                 sh 'whoami'
-                sh 'usermod -aG docker jenkins'
+                sh 'sudo usermod -aG docker $whoami'
+                sh 'sudo chmod 666 /var/run/docker.sock'
 
             }
         }

@@ -17,64 +17,64 @@ dataImport="tvhoa289/spring-boot-dataimport-p8888"
 
 echo "$BUILD_NUMBER"
 a="base"
-if [ "${Choice_Image_to_build}" == "authentication" ]
+if [ "${Choice_ServiceName}" == "authentication" ]
     then
         echo "build Step:"
         docker build -t $authentication:$BUILD_NUMBER --build-arg path=/authentication/target/spring-boot-docker.jar --build-arg port=8081 .
         docker push $authentication:$BUILD_NUMBER
         docker rmi $authentication:$BUILD_NUMBER
-elif [ "${Choice_Image_to_build}" == "documentupload" ]
+elif [ "${Choice_ServiceName}" == "documentupload" ]
     then
         docker build -t $document_upload:$a --build-arg path=/documentupload/target/spring-boot-docker.jar --build-arg port=8088 .
         docker push $document_upload:$a
         docker rmi $document_upload:$a
-elif [ "${Choice_Image_to_build}" == "portal" ]
+elif [ "${Choice_ServiceName}" == "portal" ]
     then
         docker build -t $portal:$a --build-arg path=/portal/target/spring-boot-docker.jar --build-arg port=8082 .
         docker push $portal:$a
         docker rmi $portal:$a
         
-elif [ "${Choice_Image_to_build}" == "cachemanagement" ]
+elif [ "${Choice_ServiceName}" == "cachemanagement" ]
     then
         docker build -t $cache_management:$BUILD_NUMBER --build-arg path=/cachemanagement/target/spring-boot-docker.jar --build-arg port=8089 .
         docker push $cache_management:$BUILD_NUMBER
         docker rmi $cache_management:$BUILD_NUMBER
-elif [ "${Choice_Image_to_build}" == "notification" ]
+elif [ "${Choice_ServiceName}" == "notification" ]
     then
         docker build -t ${notification}:$BUILD_NUMBER --build-arg path=/notification/target/spring-boot-docker.jar --build-arg port=8765 .
         docker push $notification:$BUILD_NUMBER
         docker rmi $notification:$BUILD_NUMBER
-elif [ "${Choice_Image_to_build}" == "user" ]
+elif [ "${Choice_ServiceName}" == "user" ]
     then
         docker build -t $user:$BUILD_NUMBER --build-arg path=/user/target/spring-boot-docker.jar --build-arg port=8080 .
         docker push $user:$BUILD_NUMBER
         docker rmi $user:$BUILD_NUMBER
-elif [ "${Choice_Image_to_build}" == "auditlog" ]
+elif [ "${Choice_ServiceName}" == "auditlog" ]
     then
         docker build -t $auditlog:$a --build-arg path=/auditlog/target/spring-boot-docker.jar --build-arg port=8083 .
         docker push $auditlog:$a
         docker rmi $auditlog:$a
-elif [ "${Choice_Image_to_build}" == "dataquery" ]
+elif [ "${Choice_ServiceName}" == "dataquery" ]
     then
         docker build -t $dataquery:$BUILD_NUMBER --build-arg path=/dataquery/target/spring-boot-docker.jar --build-arg port=8084 .
         docker push $dataquery:$BUILD_NUMBER
         docker rmi $dataquery:$BUILD_NUMBER
-elif [ "${Choice_Image_to_build}" == "ecwrcontrol" ]
+elif [ "${Choice_ServiceName}" == "ecwrcontrol" ]
     then
         docker build -t $ecwrcontrol:$BUILD_NUMBER --build-arg path=/ecwrcontrol/target/spring-boot-docker.jar --build-arg port=8085 .
         docker push $ecwrcontrol:$BUILD_NUMBER
         docker rmi $ecwrcontrol:$BUILD_NUMBER
-elif [ "${Choice_Image_to_build}" == "configuration" ]
+elif [ "${Choice_ServiceName}" == "configuration" ]
     then
         docker build -t $configuration:$BUILD_NUMBER --build-arg path=/configuration/target/spring-boot-docker.jar --build-arg port=8086 .
         docker push $configuration:$BUILD_NUMBER
         docker rmi $configuration:$BUILD_NUMBER
-elif [ "${Choice_Image_to_build}" == "admin" ]
+elif [ "${Choice_ServiceName}" == "admin" ]
     then
         docker build -t $admin:$BUILD_NUMBER --build-arg path=/admin/target/spring-boot-docker.jar --build-arg port=8087 .
         docker push $admin:$BUILD_NUMBER
         docker rmi $admin:$BUILD_NUMBER
-else [ "${Choice_Image_to_build}" == "dataImport" ]
+else [ "${Choice_ServiceName}" == "dataImport" ]
     docker build -t $dataImport:$BUILD_NUMBER --build-arg path=/dataImport/target/spring-boot-docker.jar --build-arg port=8888 .
     docker push $dataImport:$BUILD_NUMBER
     docker rmi $dataImport:$BUILD_NUMBER
