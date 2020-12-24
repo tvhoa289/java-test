@@ -2,9 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage("test"){
+        stage(""){
             steps {
                 sh 'cat ~/.aws/credentials'
+                sh 'aws --version'
             }
         }
         stage("Assume Role"){
@@ -20,6 +21,17 @@ pipeline {
                     // do something
                     sh "aws sts assume-role --role-arn arn:aws:iam::810733428226:role/lssp-dev-Role  --role-session-name $BUILD_NUMBER --duration-seconds 900 --region ap-southeast-1 > assume-role.txt"
 					//sh 'accessKeyId ="$(grep -oP '(?<="AccessKeyId": ")[^"]*' assume-role.txt)"'
+					sh '''#!/bin/bash
+                            echo "hello world"
+                            AccessKeyId="$(grep -oP '(?<="AccessKeyId": ")[^"]*' assume-role.txt)"
+                            SecretAccessKey="$(grep -oP '(?<="SecretAccessKey": ")[^"]*' assume-role.txt)"
+                            SessionToken="$(grep -oP '(?<="SessionToken": ")[^"]*' assume-role.txt)"
+                            cd ~/.aws
+                            rm -rf credentials
+                            pwd
+                            echo \"[default]\naws_access_key_id = $AccessKeyId\naws_secret_access_key = $SecretAccessKey\naws_session_token = $SessionToken\" > credentials
+                            cat ~/.aws/credentials
+                        '''
 					sh 'cat ~/.aws/credentials'
 					sh 'pwd'
                 }
