@@ -8,6 +8,7 @@ pipeline {
                 sh 'aws --version'
                 sh 'which aws'
                 sh 'whereis aws'
+                sh 'docker -v'
 
             }
         }
