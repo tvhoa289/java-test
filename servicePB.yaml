@@ -200,11 +200,12 @@ Resources:
       ServiceName: !Ref 'ServiceName'
       Cluster: !Ref 'ClusterName'
       CapacityProviderStrategy:
-        {
-          "CapacityProvider": "FARGATE_SPOT"
-          "Weight": 1
-          "Base": 0
-        }
+      - CapacityProvider: FARGATE
+        Weight: 0
+        Base: 0
+      - CapacityProvider: FARGATE_SPOT
+        Weight: 1
+        Base: 0
       LaunchType: FARGATE
       DeploymentConfiguration:
         MaximumPercent: 200
