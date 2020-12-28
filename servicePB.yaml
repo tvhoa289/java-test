@@ -191,7 +191,7 @@ Resources:
             LogDriver: awslogs
             Options:
               awslogs-region: !Ref AWS::Region
-              awslogs-group: !Ref LogGroup
+              awslogs-group: !Ref LogStream
               awslogs-stream-prefix: 'ecs'
 
   Service:
@@ -199,7 +199,13 @@ Resources:
     Properties:
       ServiceName: !Ref 'ServiceName'
       Cluster: !Ref 'ClusterName'
-      CapacityProvider: FARGATE_SPOT
+      CapacityProviderStrategy:
+      - CapacityProvider: FARGATE
+        Weight: 0
+        Base: 0
+      - CapacityProvider: FARGATE_SPOT
+        Weight: 1
+        Base: 0
       LaunchType: FARGATE
       DeploymentConfiguration:
         MaximumPercent: 200
