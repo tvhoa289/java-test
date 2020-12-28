@@ -51,7 +51,7 @@ Parameters:
 
   SecurityGroupsECS:
     Type: String
-    Default: 0eddd491400e7c2a7
+    Default: sg-0eddd491400e7c2a7	
     Description: SecurityGroup for ECS 
   
   VPC:
