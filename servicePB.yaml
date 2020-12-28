@@ -108,7 +108,7 @@ Parameters:
     Description: Role for container push log.
   LogGroup:
     Type: String
-    Default: arn:aws:logs:ap-southeast-1:810733428226:log-group:/ecs/lssp:*
+    Default: /ecs/lssp
     Description: Role for container push log.
 
 Conditions:
@@ -117,6 +117,11 @@ Conditions:
 Resources:
 
   # Create a rule on the load balancer for routing traffic to the target group
+  LogStream:
+    Type: AWS::Logs::LogStream
+    Properties: 
+      LogGroupName: !Ref LogGroup
+      LogStreamName: !Ref ServiceName
 
   LoadBalancerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
@@ -194,6 +199,7 @@ Resources:
     Properties:
       ServiceName: !Ref 'ServiceName'
       Cluster: !Ref 'ClusterName'
+      CapacityProvider: FARGATE_SPOT
       LaunchType: FARGATE
       DeploymentConfiguration:
         MaximumPercent: 200

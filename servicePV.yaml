@@ -100,6 +100,10 @@ Parameters:
     Type: String
     Default: arn:aws:iam::810733428226:role/lssp-ECSTaskExecutionRole-L20GEPJBOO5J
     Description: Role for container push log.
+  LogGroup:
+    Type: String
+    Default: /ecs/lssp
+    Description: Role for container push log.
 Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
 
@@ -107,10 +111,11 @@ Resources:
 
   # Create a rule on the load balancer for routing traffic to the target group
 
-  LogGroup:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Join ['', [/ecs/, !Ref ServiceName]]
+  LogStream:
+    Type: AWS::Logs::LogStream
+    Properties: 
+      LogGroupName: !Ref LogGroup
+      LogStreamName: !Ref ServiceName
 
   LoadBalancerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
