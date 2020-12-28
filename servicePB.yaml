@@ -203,7 +203,7 @@ Resources:
       - CapacityProvider: FARGATE_SPOT
         Weight: 1
         Base: 1
-      LaunchType: FARGATE
+      LaunchType: FARGATE_SPOT
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 75
