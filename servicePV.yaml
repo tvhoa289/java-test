@@ -51,12 +51,12 @@ Parameters:
 
   SecurityGroupsECS:
     Type: String
-    Default: sg-06f381b6939800611
+    Default: 0eddd491400e7c2a7
     Description: SecurityGroup for ECS 
   
   VPC:
     Type: String
-    Default: vpc-07ff144e65d289ee1
+    Default: vpc-0cb2db9d1ae226825
     Description: VPC
   Family:
     Type: String
@@ -76,29 +76,29 @@ Parameters:
 
   SubnetPrivate1:
     Type: String
-    Default: subnet-0f3f19ed09b203350
+    Default: subnet-0cdfd551a27e89fb2	
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
 
   SubnetPrivate2:
     Type: String
-    Default: subnet-0b4167f2a3da2433c
+    Default: subnet-0b4cdcdd44062ae50	
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
                  access other AWS resources like S3 buckets, DynamoDB tables, etc
   
   PrivateLoadBalancerListener:
     Type: String
-    Default: arn:aws:elasticloadbalancing:eu-central-1:810733428226:listener/app/lssp-PrivateLoadBalancer/e4dc266180bf3e74/c1d50e996c80595a
+    Default: arn:aws:elasticloadbalancing:ap-southeast-1:810733428226:listener/app/lssp-PrivateLoadBalancer/58a784f6c77e2a58/8a4b1df2c7c2e80a	
     Description: Listener for forward traffic
 
   AutoscalingRole:
     Type: String
-    Default: arn:aws:iam::810733428226:role/lssp-AutoscalingRole-VVUBKON54DD8
+    Default: arn:aws:iam::810733428226:role/lssp-AutoscalingRole-4MHKNE8GLCL5
     Description: Listener for forward traffic
 
   ExecutionRoleArn:
     Type: String
-    Default: arn:aws:iam::810733428226:role/lssp-ECSTaskExecutionRole-L20GEPJBOO5J
+    Default: arn:aws:iam::810733428226:role/lssp-ECSTaskExecutionRole-6MPFUGP9WK9A
     Description: Role for container push log.
   LogGroup:
     Type: String
