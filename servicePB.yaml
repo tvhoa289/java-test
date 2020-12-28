@@ -199,11 +199,7 @@ Resources:
     Properties:
       ServiceName: !Ref 'ServiceName'
       Cluster: !Ref 'ClusterName'
-      CapacityProviderStrategy:
-      - CapacityProvider: FARGATE_SPOT
-        Weight: 1
-        Base: 1
-      LaunchType: FARGATE_SPOT
+      LaunchType: FARGATE
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 75
